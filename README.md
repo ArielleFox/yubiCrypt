@@ -6,6 +6,7 @@ Your Paranoid Encryption Tingi
 
 Running the installer script will install and set up interactivly with you...
 Created folders:  ~/.yubiCrypt and ~/dcde
+And Set Up AGE & AGE-YUBIKEY-PLUGIN (FOR LINUX WINDOWS OR OSX!)
 ## Command
 ```bash
 $ ./installer.py
