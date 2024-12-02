@@ -8,4 +8,6 @@ def generate_new_key() -> None:
 	os.system('age-plugin-yubikey generate')
 
 if __name__ == "__main__":
-	pass
+	list_yubikeys()
+	generate_new_key()
+
