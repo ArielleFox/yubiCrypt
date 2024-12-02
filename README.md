@@ -20,3 +20,9 @@ $ yubienCrypt <filename>
 ```bash
 $ yubideCrypt <filename>
 ```
+
+# USED SOFTWARE
+## AGE
+https://github.com/FiloSottile/age
+### AGE-PLUGIN-YUBIKEY
+https://github.com/str4d/age-plugin-yubikey
