@@ -37,9 +37,10 @@ def install_dependencies():
             subprocess.run(["apt-get", "install", "-y", "pkg-config", "libpcsclite-dev"], check=True)
         elif os.path.exists("/etc/fedora-release"):
             # Fedora
+            subprocess.run(["dnf", "install", "-y", "rustup"], check=True)
             subprocess.run(["dnf", "install", "-y", "pcsc-lite-devel"], check=True)
         else:
-            print("Unsupported Linux distribution. Please install PCSC-Lite development packages manually.")
+            print("Unsupported Linux distribution. Please install PCSC-Lite development packages and rust manually.")
     elif system == "darwin":
         # macOS
         try:
