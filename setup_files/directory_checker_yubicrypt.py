@@ -19,6 +19,7 @@ def create_yubicrypt_dir():
     home_dir = Path.home()
     yubicrypt_dir = home_dir / '.yubiCrypt' / 'keys'
 
+    os.system('mkdir -p ', yubicrypt_dir)
     # Check if directory already exists
     if yubicrypt_dir.exists():
         print(f"Directory {yubicrypt_dir} already exists.")
