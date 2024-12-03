@@ -2,6 +2,7 @@ all: install
 
 install:
 	sudo python3 setup_files/install_age.py
+	cargo install age-plugin-yubikey
 	sudo python3 setup_files/install_age_plugin.py
 	python3 setup_files/directory_checker_yubicrypt.py
 	python3 setup_files/copy_run_files.py
