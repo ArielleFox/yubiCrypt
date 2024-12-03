@@ -17,9 +17,11 @@ def create_yubicrypt_dir():
     """Create and configure the ~/.yubiCrypt directory"""
     # Get user's home directory
     home_dir = Path.home()
-    yubicrypt_dir = home_dir / '.yubiCrypt' / 'keys'
+    yubicrypt_dir = home_dir / '.yubiCrypt'
 
-    os.system('mkdir -p ', yubicrypt_dir)
+    os.system('mkdir -p `/.yubiCrypt')
+    os.system('mkdir -p `/.yubiCrypt/keys')
+
     # Check if directory already exists
     if yubicrypt_dir.exists():
         print(f"Directory {yubicrypt_dir} already exists.")
