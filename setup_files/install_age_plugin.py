@@ -55,7 +55,7 @@ def install_dependencies():
 def install_age_plugin_yubikey():
     """Install age-plugin-yubikey using cargo"""
     print("Installing age-plugin-yubikey...")
-#    os.system('cargo install age-plugin-yubikey')
+    os.system('cargo install age-plugin-yubikey')
 
 def main() -> bool:
     print('\n--------------------------------------------')
