@@ -19,6 +19,7 @@ def add_aliases_to_bash_aliases():
     aliases = [
         "alias yubienCrypt='python3 ~/dcde/src/encrypt.py'",
         "alias yubideCrypt='python3 ~/dcde/src/decrypt.py'",
+        "alias yubiCryptImport='python3 ~/.yubiCrypt/yubiCryptImporter/import.py'",
     ]
 
     try:

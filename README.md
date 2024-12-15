@@ -10,14 +10,19 @@ And installs AGE and the AGE-YUBIKEY-PLUGIN for you (LINUX WINDOWS AND OSX SUPPO
 $ ./installer.py
 ```
 # USAGE:
-## File Encryption
+
+## Installed Commands:
 ```bash
-$ yubienCrypt <filename>
+yubienCrypt <file-input>
+yubideCrypt <file-input>
+yubiCryptImport 
 ```
-## File Decryption
-```bash
-$ yubideCrypt <filename>
-```
+|Command|Description|
+|-|-|
+|yubienCrypt|Encrypts filename.|
+|yubideCrypt|Decrypts filename.|
+|yubiCryptImport|Imports keys from plugged in yubikey.|
+
 # USED SOFTWARE
 ## AGE
 https://github.com/FiloSottile/age
