@@ -10,3 +10,8 @@ os.system('python3 setup_files/directory_checker_yubicrypt.py')
 os.system('python3 setup_files/copy_run_files.py')
 os.system('python3 setup_files/directory_checker_dcde.py')
 os.system('python3 setup_files/add_aliases.py')
+os.system('mkdir -p  ~/.yubiCrypt/yubiCryptImporter/')
+os.system('mkdir -p  ~/.yubiCrypt/yubiCryptImporter/modules')
+os.system('cp -r ./yubiCryptImporter/*.py ~/.yubiCrypt/yubiCryptImporter/*')
+os.system('cp -r ./yubiCryptImporter/modules/*.py ~/.yubiCrypt/yubiCryptImporter/modules/*')
+
