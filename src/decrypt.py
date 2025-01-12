@@ -6,6 +6,7 @@ import datetime
 import socket
 import sys
 
+
 def decrypt_file(file_path):
     ident = "first.txt"
     curr = os.path.expanduser(f"~/.yubiCrypt/keys/{ident}")
