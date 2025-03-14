@@ -32,12 +32,11 @@ def decrypt_file(file_path):
         # Log failure details
         user = os.getlogin()
         hostname = socket.gethostname()
-        ip_address = subprocess.getoutput("dig +short myip.opendns.com @resolver1.opendns.com")
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         os_type = os.name
 
         failure_message = (
-            f"401 Unauthorized {user}@{hostname} {ip_address}\n"
+            f"401 Unauthorized {user}@{hostname}\n"
             f"{timestamp} {os_type}\n"
             "DECRYPTION FAILED"
         )
