@@ -26,7 +26,7 @@ def encrypt_file(file_path):
         subprocess.run(command, check=True)
 
         # Confirm successful encryption
-        print(f"SUCCESSFULLY ENCRYPTED! {encrypted_file}")
+        print(f"	SUCCESSFULLY ENCRYPTED!{file_path} ==> {encrypted_file}")
         os.remove(file_path)  # Remove the original file
 
     except Exception as e:
@@ -36,21 +36,15 @@ def encrypt_file(file_path):
         # Log failure details
         user = os.getlogin()
         hostname = socket.gethostname()
-        ip_address = subprocess.getoutput("dig +short myip.opendns.com @resolver1.opendns.com")
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         os_type = os.name
 
         failure_message = (
-            f"401 Unauthorized {user}@{hostname} {ip_address}\n"
+            f"401 Unauthorized {user}@{hostname}\n"
             f"{timestamp} {os_type}\n"
             "ENCRYPTION FAILED"
         )
         print(failure_message)
-
-        # Clean up keys directory
-        keys_dir = os.path.expanduser("~/.yubiCrypt/keys/")
-        for key_file in os.listdir(keys_dir):
-            os.remove(os.path.join(keys_dir, key_file))
 
         # Log failure to a temporary file
         dirty_tmp_path = os.path.expanduser("~/.yubiCrypt/dirty.tmp")
