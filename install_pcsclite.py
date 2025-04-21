@@ -37,6 +37,7 @@ def run_command(command):
 def check_dependencies():  
     """Check if required build dependencies are installed."""  
     dependencies = {  
+        'CachyOS': ['base-devel', 'pkg-config', 'libusb', 'systemd'],  
         'debian': ['build-essential', 'pkg-config', 'libusb-1.0-0-dev', 'libudev-dev'],  
         'ubuntu': ['build-essential', 'pkg-config', 'libusb-1.0-0-dev', 'libudev-dev'],  
         'fedora': ['gcc', 'gcc-c++', 'make', 'pkgconfig', 'libusbx-devel', 'systemd-devel'],  
@@ -49,7 +50,8 @@ def check_dependencies():
       
     distro = get_linux_distribution()  
     if distro not in dependencies:  
-        print(f"Unsupported distribution: {distro}")  
+        print(f"Unsupported distribution: {distro}")
+        print(f"Please submit your distrobution with the value of: <{distro}> and the name of their <package-manager> for integration as git issue.")
         sys.exit(1)  
       
     return dependencies[distro]  
@@ -79,6 +81,7 @@ def install_pcsclite():
       
     # Update package manager  
     update_commands = {  
+        'CachyOS': 'pacman -Sy',
         'debian': 'apt-get update',  
         'ubuntu': 'apt-get update',  
         'fedora': 'dnf check-update',  
@@ -97,6 +100,7 @@ def install_pcsclite():
         'rhel': f"yum install -y {packages[distro]}",  
         'centos': f"yum install -y {packages[distro]}",  
         'arch': f"pacman -S --noconfirm {packages[distro]}",  
+        'CachyOS': f"pacman -S --noconfirm {packages[distro]}",  
         'opensuse': f"zypper install -y {packages[distro]}",  
         'gentoo': f"emerge {packages[distro]}"  
     }  
@@ -108,7 +112,7 @@ def install_pcsclite():
         run_command(f"apt-get install -y {' '.join(deps)}")  
     elif distro in ['fedora', 'rhel', 'centos']:  
         run_command(f"yum install -y {' '.join(deps)}")  
-    elif distro == 'arch':  
+    elif distro in ['arch', 'CachyOS']:  
         run_command(f"pacman -S --noconfirm {' '.join(deps)}")  
     elif distro == 'opensuse':  
         run_command(f"zypper install -y {' '.join(deps)}")  
