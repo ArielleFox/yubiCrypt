@@ -7,11 +7,44 @@ from pathlib import Path
 import stat
 import datetime
 import hashlib
+import time
+from contextlib import contextmanager
+from typing import Generator, IO, Any
+from datetime import datetime
+
+@contextmanager
+def timer() -> Generator[None, Any, None]:
+    start_time: float = time.perf_counter()
+    print(f'Started at: {datetime.now():%H:%M:%S}')
+    try:
+        yield
+    finally:
+        end_time: float = time.perf_counter()
+        print(f'Ended at: {datetime.now():%H:%M:%S}')
+        print(f'Time: {end_time - start_time:.4f}s')
+
+
+@contextmanager
+def file_manager(path: str, mode: str) -> Generator[IO, Any, None]:
+    with timer():
+        file: IO= open(path, mode)
+        print('Opening file')
+        try:
+            yield file
+        except Exection as e:
+            print(e)
+        finally:
+            print('Closing file...')
+            if file:
+                file.close()
+
+
+
 
 def calculate_file_hash(file_path):
     """Calculate SHA-256 hash of a file"""
     sha256_hash = hashlib.sha256()
-    with open(file_path, "rb") as f:
+    with file_manager(file_path, "rb") as f:
         for byte_block in iter(lambda: f.read(4096), b""):
             sha256_hash.update(byte_block)
     return sha256_hash.hexdigest()
@@ -104,7 +137,7 @@ def copy_with_permissions(src, dst, manifest_path):
 
         # Save manifest
         manifest_file = dest_dir / "copy_manifest.txt"
-        with open(manifest_file, 'w') as f:
+        with file_manager(manifest_file, 'w') as f:
             for item in manifest:
                 f.write(f"File: {item['dest_path']}\n")
                 f.write(f"Hash: {item['hash']}\n")

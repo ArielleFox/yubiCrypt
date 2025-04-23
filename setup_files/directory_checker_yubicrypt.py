@@ -8,6 +8,37 @@ import pwd
 import grp
 import platform
 from typing import Any
+import time
+from contextlib import contextmanager
+from typing import Generator, IO, Any
+from datetime import datetime
+
+@contextmanager
+def timer() -> Generator[None, Any, None]:
+    start_time: float = time.perf_counter()
+    print(f'Started at: {datetime.now():%H:%M:%S}')
+    try:
+        yield
+    finally:
+        end_time: float = time.perf_counter()
+        print(f'Ended at: {datetime.now():%H:%M:%S}')
+        print(f'Time: {end_time - start_time:.4f}s')
+
+
+@contextmanager
+def file_manager(path: str, mode: str) -> Generator[IO, Any, None]:
+    with timer():
+        file: IO= open(path, mode)
+        print('Opening file')
+        try:
+            yield file
+        except Exection as e:
+            print(e)
+        finally:
+            print('Closing file...')
+            if file:
+                file.close()
+
 
 def get_user_info():
     """Get current user information"""
@@ -61,7 +92,7 @@ For more information, visit:
 https://github.com/str4d/age-plugin-yubikey
 """
 
-        with open(readme_path, 'w') as f:
+        with file_manager(readme_path, 'w') as f:
             f.write(readme_content)
 
         # Set README permissions to 600 (owner read/write only)
