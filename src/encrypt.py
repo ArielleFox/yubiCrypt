@@ -31,7 +31,7 @@ def file_manager(path: str, mode: str) -> Generator[IO, Any, None]:
     except Exection as e:
         print(e)
     finally:
-        print('Closing file...')
+        print('Saving file...')
         if file:
             file.close()
 
