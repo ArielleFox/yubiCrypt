@@ -24,10 +24,10 @@ def timer() -> Generator[None, Any, None]:
 @contextmanager
 def file_manager(path: str, mode: str) -> Generator[IO, Any, None]:
     with timer():
-        file: IO= open(path, mode)
         try:
+            file: IO = open(path, mode)
             yield file
-        except Exection as e:
+        except Exception as e:
             print(e)
         finally:
             print('Closing ')
@@ -37,21 +37,21 @@ def file_manager(path: str, mode: str) -> Generator[IO, Any, None]:
 @contextmanager
 def rm_file(path: str) -> Generator[IO, Any, None]:
     with timer():
-        file: IO = open(path)
-        print('Opening file')
         try:
+            file: IO = open(path)
+            print('Opening file')
             yield file
         except FileNotFoundError:
-            print(f"Error: File '{file_name}' not found.")
-        except Exection as e:
+            print(f"Error: File '{path}' not found.")
+        except Exception as e:
             print(e)
         finally:
             print('Closing file...')
             if file:
                 file.close()
+            if os.path.isfile(path):
                 os.remove(path)
                 print(f"Removed '{path}' successfully.")
-
 
 def decrypt_file(file_path):
     ident = "first.txt"
@@ -64,22 +64,20 @@ def decrypt_file(file_path):
                 raise FileNotFoundError(f"Identity file not found: {curr}")
 
             # Decrypt the file using `age`
-            decrypted_file = file_path[::-1][4:][::-1]  # Remove ".age" from the file name
+            decrypted_file = os.path.splitext(file_path)[0]  # Remove ".age" extension
             command = ["age", "-d", "-i", curr, "-o", decrypted_file, file_path]
             subprocess.run(command, check=True)
 
             # Confirm successful decryption
-            print(f"	SUCCESSFULLY DECRYPTED! {file_path} ==> {decrypted_file}")
+            print(f"SUCCESSFULLY DECRYPTED! {file_path} ==> {decrypted_file}")
             os.remove(file_path)  # Remove the encrypted file
 
-        except Exception as e:
-            # Handle decryption failure
-            print("Reporting Failed Decryption Attempt")
-
-            # Log failure details
+        except subprocess.CalledProcessError as e:
+            print(f"Decryption failed: {e}")
+            print("Ensure the file is properly encrypted with `age` and try again.")
             user = os.getlogin()
             hostname = socket.gethostname()
-            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             os_type = os.name
 
             failure_message = (
@@ -89,10 +87,11 @@ def decrypt_file(file_path):
             )
             print(failure_message)
 
-            # Clean up keys directory
+            # Clean up keys directory, but ensure 'first.txt' is never deleted
             keys_dir = os.path.expanduser("~/.yubiCrypt/keys/")
             for key_file in os.listdir(keys_dir):
-                os.remove(os.path.join(keys_dir, key_file))
+                if key_file != ident:  # Skip deleting 'first.txt'
+                    os.remove(os.path.join(keys_dir, key_file))
 
             # Log failure to a temporary file
             dirty_tmp_path = os.path.expanduser("~/.yubiCrypt/dirty.tmp")
