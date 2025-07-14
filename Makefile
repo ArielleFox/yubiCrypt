@@ -1,4 +1,4 @@
-all: prepare install
+all: prepare install rust
 
 prepare:
 	chmod +x *.py
@@ -15,3 +15,6 @@ install:
 	python3 setup_files/copy_run_files.py
 	python3 setup_files/directory_checker_dcde.py
 	python3 setup_files/add_aliases.py
+
+rust:
+	cd alpha_rust_rewrite/; cargo build --release; cd -;

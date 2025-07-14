@@ -1,0 +1,36 @@
+# Ignore Cargo build artifacts
+/target/
+
+# Ignore incremental compilation directories
+**/incremental/
+/**/.fingerprint/
+
+# Build scripts output
+**/build/
+
+# Rust-generated metadata
+*.rmeta
+*.rlib
+*.dSYM/       # macOS debug symbols
+*.exe         # Windows executables
+*.dll
+*.so
+*.dylib
+
+# Backup files created by some editors/tools
+**/*.rs.bk
+
+# Documentation output
+/target/doc/
+/docs/
+
+# IDE/editor folders
+.vscode/
+.idea/
+*.code-workspace
+
+# Rust Analyzer cache
+.rust-analyzer/
+
+# Optional: lockfile (uncomment if you're writing a library)
+/#Cargo.lock
